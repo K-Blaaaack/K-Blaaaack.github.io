@@ -81,7 +81,7 @@
                     "color": color16()
                 });
                 $("body").append($i);
-                play_sound('./zhuangbi.mp3');
+                play_sound('./ciallo.aac');
                 $i.animate({
                     "top": y - 180,
                     "opacity": 0
