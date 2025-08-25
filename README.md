@@ -8,7 +8,7 @@
 部署完成后，访问地址格式如下：
 
 ```
-https://<你的GitHub用户名>.github.io/<仓库名>/
+https://github.com/K-Blaaaack/K-Blaaaack.github.io/tree/BlueArchive-Account-Recovery
 ```
 
 ## 使用方法
