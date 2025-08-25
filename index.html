@@ -1,109 +1,88 @@
-<html lang="zh-CN">
-<!-- 这个网站是由 ciallo.cc 修改过来哒~ 感谢「リウ・ディ」さま~ -->
+<!DOCTYPE html>
+<html lang="zh">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>装逼让你飞起来</title>
-    <link rel="shortcut icon" href="./favicon.ico">
-    <style>
-        .center {
-            width: 540px;
-            height: 120px;
-            margin: auto;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-        body {
-            overflow: hidden; /* 隐藏滚动条 */
-            user-select: none; /* 禁用所有元素的鼠标选择操作 */
-            -webkit-user-select: none; /* 禁用 Chrome 和 Safari 的鼠标选择操作 */
-            -moz-user-select: none; /* 禁用 Firefox 的鼠标选择操作 */
-            -ms-user-select: none; /* 禁用 IE 的鼠标选择操作 */
-            background-color: #181A1B; /* 更改背景颜色 */
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>账号救援模板</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div id="main" class="center">
-        <img src="./ciallo.gif" style="filter: invert(100%);" draggable="false">
-    </div>
-    <script src="./jquery.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            // 每秒生成一个弹幕
-            setInterval(createBulletScreen, 80);
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-6">
+  <!-- 标题 -->
+  <h1 class="text-3xl font-bold text-gray-800 mb-4">账号救援模板</h1>
 
-            // 随机生成弹幕内容、颜色、大小以及固定高度
-            function createBulletScreen() {
-                const texts = ["装逼让你飞起来", "装逼让你飞起来"];
-                const text = texts[Math.floor(Math.random() * texts.length)];
-                const size = Math.floor(Math.random() * 20 + 5) + "px";
-                const topPosition = Math.floor(Math.random() * window.innerHeight) + "px";
-                
-                // 创建弹幕元素并设置样式
-                const bullet = $("<span></span>").text(text);
-                bullet.css({
-                    "position": "absolute",
-                    "white-space": "nowrap",
-                    "color": color16(),
-                    "font-size": size,
-                    "top": topPosition,
-                    "left": "100%", // 在屏幕外右侧生成
-                });
+  <!-- 提示 -->
+  <p class="text-lg text-gray-600 mb-6 text-center max-w-2xl">
+    提交了申诉之后，他发回个邮件告诉要补充信息，就用这个模板去回复
+  </p>
 
-                $("body").append(bullet);
-                
-                // 动画从右向左滚动弹幕
-                bullet.animate(
-                    { left: `-${bullet.width()}px` },
-                    16699,
-                    "linear",
-                    function() {
-                        bullet.remove(); // 动画结束后移除弹幕
-                    }
-                );
-            }
+  <!-- 模板区域 -->
+  <div class="bg-white shadow-lg rounded-2xl p-6 w-full max-w-4xl border border-gray-200">
+    <pre class="whitespace-pre-wrap break-words text-gray-800 text-sm leading-relaxed">
+アカウント復旧に関するご依頼（UID：Xxxxxx）
+「ブルーアーカイブ」運営事務局 様
 
-            // 点击效果
-            $("body").click(function(e) {
-                const a = ["装逼我让你飞起来，相信不？"];
-                const $i = $("<span/>").text(a[Math.floor(Math.random() * a.length)]);
-                const x = e.pageX,
-                    y = e.pageY;
-                $i.css({
-                    "z-index": 999999,
-                    "top": y - 20,
-                    "left": x,
-                    "position": "absolute",
-                    "font-weight": "bold",
-                    "color": color16()
-                });
-                $("body").append($i);
-                play_sound('./zhuangbi.mp3');
-                $i.animate({
-                    "top": y - 180,
-                    "opacity": 0
-                }, 1500, function() {
-                    $i.remove();
-                });
-            });
-        });
+お世話になっております。ニジュイシゲジバ（UID：xxxxxx）と申します。アカウント復旧に関するご案内をありがとうございます。以下に、必要情報を記載いたしますので、アカウントの復旧手続きをお願いいたします。
 
-        function color16(){
-            const r = Math.floor(Math.random() * 256);
-            const g = Math.floor(Math.random() * 256);
-            const b = Math.floor(Math.random() * 256);
-            return `rgb(${r}, ${g}, ${b})`;
-        }
+1. UID
+xxxxxxx
 
-        function play_sound(url_data) {
-            const audio = new Audio(url_data);
-            audio.play().catch(function(error) {
-                console.error('播放音频时出错：', error);
-            });
-        }
-    </script>
+2. ゲームユーザーID
+不明
+
+3. Yostar ID
+不明（ログインできないため確認できません）
+
+4. フレンドコード
+[填写您的好友代码，若不清楚请写“不明”]
+
+5. 呼び名
+ニジュイシゲジバ
+
+6. 連携コード発行時のスクリーンショット
+[若有截图，请写“添付ファイルにてスクリーンショットを送信いたします”；若无，请写“スクリーンショットはございません”]
+
+7. ゲーム内の「アカウントを削除」機能を使用したか
+[填写是否使用过，例如“使用していません”或“使用した記憶があります”]
+
+8. 連携に使用したXアカウント
+[填写绑定的X账号，例如“@example”，若无请写“使用していません”]
+
+9. Yostar連携に使用したメールアドレス
+［邮箱］
+[若有其他曾用过的邮箱，请补充，例如“以前使用したメールアドレス：example2@gmail.com”]
+
+10. 挨拶（アカウント情報のコメント）
+[填写游戏内设置的问候语，若无请写“設定していません”或“不明”]
+
+11. ゲーム内で設定した生年月日
+未設定
+
+12. 星5に神秘開放したキャラクター
+[填写已解锁神秘的五星角色，例如“聖園ミカ（水着）”或其他，若无请写“なし”]
+
+13. 星4に神秘開放したキャラクター
+[填写已解锁神秘的四星角色，若无请写“なし”]
+
+14. 所持青輝石数
+[填写持有的青辉石数量，例如“約5000個”，若不清楚请写“不明”]
+
+補足情報
+ゲーム開始日時：2024年1月1日 00:00
+最終ログイン日時：2025年8月4日 18:00
+
+所持キャラクター例：
+[填写等级，例如“聖園ミカ（水着）Lv70”或“不明”]
+
+問題の詳細：以前（以前的邮箱）で認証コードを取得しログインしていましたが、今日ログインしたところYostarアカウントに切り替わっており、Googleアカウントでログインすると新しいデフォルトアカウントになってしまいました。別のメールアドレスでYostarを登録し直そうとしましたが「既に連携済み」と表示されます。以前のアカウントに戻したいです。
+
+不足している情報がある場合、大変恐縮ですが追加でご案内いただけますと幸いです。キャラクターたちは私にとって非常に大切な存在ですので、復旧のほど何卒よろしくお願い申し上げます。
+
+お名前
+（游戏名字）
+
+連絡先メールアドレス
+（你用来联系的邮箱）
+    </pre>
+  </div>
 </body>
 </html>
