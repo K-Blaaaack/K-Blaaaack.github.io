@@ -1,109 +1,30 @@
-<html lang="zh-CN">
-<!-- 这个网站是由 ciallo.cc 修改过来哒~ 感谢「リウ・ディ」さま~ -->
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>装逼让你飞起来</title>
-    <link rel="shortcut icon" href="./favicon.ico">
-    <style>
-        .center {
-            width: 540px;
-            height: 120px;
-            margin: auto;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-        body {
-            overflow: hidden; /* 隐藏滚动条 */
-            user-select: none; /* 禁用所有元素的鼠标选择操作 */
-            -webkit-user-select: none; /* 禁用 Chrome 和 Safari 的鼠标选择操作 */
-            -moz-user-select: none; /* 禁用 Firefox 的鼠标选择操作 */
-            -ms-user-select: none; /* 禁用 IE 的鼠标选择操作 */
-            background-color: #181A1B; /* 更改背景颜色 */
-        }
-    </style>
+<!DOCTYPE html>
+<!-- saved from url=(0038)https://flipflow.neverup.cn/clock.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" href="https://flipflow.neverup.cn/favicon.ico">
+    <title>翻页时钟 | 基于FlipFlow自改</title>
+    <link href="./app.1844c783.css" rel="preload" as="style">
+    <link href="./app.916787af.js" rel="preload" as="script">
+    <link href="./chunk-vendors.2fab77c5.js" rel="preload" as="script">
+    <link href="./app.1844c783.css" rel="stylesheet">
 </head>
-<body>
-    <div id="main" class="center">
-        <img src="./ciallo.gif" style="filter: invert(100%);" draggable="false">
-    </div>
-    <script src="./jquery.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            // 每秒生成一个弹幕
-            setInterval(createBulletScreen, 80);
 
-            // 随机生成弹幕内容、颜色、大小以及固定高度
-            function createBulletScreen() {
-                const texts = ["装逼让你飞起来", "装逼让你飞起来"];
-                const text = texts[Math.floor(Math.random() * texts.length)];
-                const size = Math.floor(Math.random() * 20 + 5) + "px";
-                const topPosition = Math.floor(Math.random() * window.innerHeight) + "px";
-                
-                // 创建弹幕元素并设置样式
-                const bullet = $("<span></span>").text(text);
-                bullet.css({
-                    "position": "absolute",
-                    "white-space": "nowrap",
-                    "color": color16(),
-                    "font-size": size,
-                    "top": topPosition,
-                    "left": "100%", // 在屏幕外右侧生成
-                });
-
-                $("body").append(bullet);
-                
-                // 动画从右向左滚动弹幕
-                bullet.animate(
-                    { left: `-${bullet.width()}px` },
-                    16699,
-                    "linear",
-                    function() {
-                        bullet.remove(); // 动画结束后移除弹幕
-                    }
-                );
-            }
-
-            // 点击效果
-            $("body").click(function(e) {
-                const a = ["装逼我让你飞起来，相信不？"];
-                const $i = $("<span/>").text(a[Math.floor(Math.random() * a.length)]);
-                const x = e.pageX,
-                    y = e.pageY;
-                $i.css({
-                    "z-index": 999999,
-                    "top": y - 20,
-                    "left": x,
-                    "position": "absolute",
-                    "font-weight": "bold",
-                    "color": color16()
-                });
-                $("body").append($i);
-                play_sound('./zhuangbi.mp3');
-                $i.animate({
-                    "top": y - 180,
-                    "opacity": 0
-                }, 1500, function() {
-                    $i.remove();
-                });
-            });
-        });
-
-        function color16(){
-            const r = Math.floor(Math.random() * 256);
-            const g = Math.floor(Math.random() * 256);
-            const b = Math.floor(Math.random() * 256);
-            return `rgb(${r}, ${g}, ${b})`;
-        }
-
-        function play_sound(url_data) {
-            const audio = new Audio(url_data);
-            audio.play().catch(function(error) {
-                console.error('播放音频时出错：', error);
-            });
-        }
+<body><noscript><strong>翻页时钟 | 基于FlipFlow自改</strong></noscript>
+    <div id="app" data-v-app=""><div><button style="z-index: 1000; width: 24px; height: 24px; position: fixed; bottom: 10px; left: 10px; background-color: transparent; border: none;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill: rgb(255, 255, 255);"><path d="M3 21v-5h2v3h3v2zm13 0v-2h3v-3h2v5zM3 8V3h5v2H5v3zm16 0V5h-3V3h5v5z"></path></svg></button><!----></div><div class="bg"><div class="timer" style="transform: translateY(-50%) scale(0.8); filter: brightness(1);"><div class="clock timer_hms"><canvas id="clock_h" class="clock_canva" width="800" height="800"></canvas></div><div class="clock timer_hms"><canvas id="clock_m" class="clock_canva" width="800" height="800"></canvas></div><div class="clock timer_hms"><canvas id="clock_s" class="clock_canva" width="800" height="800"></canvas></div></div><div class="watchBtn" style="display: none;"><div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#ffffff"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg></div><button class="timerBtnplus"></button></div><div class="setbox set_box"><div class="set-warp"><div class="setting"><div class="pic_set"></div></div></div><div class="set_item" style="display: none;"><ul class="set_box_inner"><li><div class="setName">小时格式:</div><ul class="pickItem"><li class="pick-active">12h </li><li class="">24h </li><li class="">024h </li></ul></li><li><div class="setName">缩放比例:</div><div class="slider" style="height: 20px;"><div class="bar-line-right" style="width: 20px; height: 4px;"></div><div class="bar-line" style="width: calc(100% - 20px); height: 4px; background-size: 80%;"><div class="bar-handle" style="width: 20px; height: 20px; left: 80%;"></div></div></div><div style="width: 32px; padding-left: 8px;">80</div></li><li><div class="setName">亮度调节:</div><div class="slider" style="height: 20px;"><div class="bar-line-right" style="width: 20px; height: 4px;"></div><div class="bar-line" style="width: calc(100% - 20px); height: 4px; background-size: 100%;"><div class="bar-handle" style="width: 20px; height: 20px; left: 100%;"></div></div></div><div style="width: 32px; padding-left: 8px;">100</div></li><li><div class="setName">显示:</div><div style="margin-right: 12px; cursor: pointer;"><input type="checkbox" style="margin: 0px; vertical-align: middle; width: 18px; height: 18px; cursor: pointer;"><span>背景</span></div><div style="cursor: pointer;"><input type="checkbox" style="margin: 0px; vertical-align: middle; width: 18px; height: 18px; cursor: pointer;"><span>秒</span></div></li><li><div class="setName">正计时:</div><button class="timerBtn startBtn">开始</button><button class="timerBtn startBtn">重置</button></li><li><div class="setName">倒计时:</div><button class="timerBtn"><span class="iconTime"></span><span style="vertical-align: middle;">5m</span></button><button class="timerBtn"><span class="iconTime"></span><span style="vertical-align: middle;">10m</span></button><button class="timerBtn"><span class="iconTomato"></span><span style="vertical-align: middle;">25m</span></button><button class="timerBtn" style="margin-right: 0px;"><span class="iconCancel"></span><span style="vertical-align: middle;">关闭</span></button></li><li><div class="setName">自定义:</div><div class="time-panel-box"><div class="time-panel"><div class="scroll-box"><ul class="panel-item"><li>00</li><li>01</li><li>02</li><li>03</li><li>04</li><li>05</li><li>06</li><li>07</li><li>08</li><li>09</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li></ul></div><div class="panel-up">︿</div><div class="panel-down">﹀</div></div></div><div class="time-panel-box"><div class="time-panel"><div class="scroll-box"><ul class="panel-item"><li>00</li><li>01</li><li>02</li><li>03</li><li>04</li><li>05</li><li>06</li><li>07</li><li>08</li><li>09</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li><li>41</li><li>42</li><li>43</li><li>44</li><li>45</li><li>46</li><li>47</li><li>48</li><li>49</li><li>50</li><li>51</li><li>52</li><li>53</li><li>54</li><li>55</li><li>56</li><li>57</li><li>58</li><li>59</li></ul></div><div class="panel-up">︿</div><div class="panel-down">﹀</div></div></div><div class="time-panel-box"><div class="time-panel"><div class="scroll-box"><ul class="panel-item"><li>00</li><li>01</li><li>02</li><li>03</li><li>04</li><li>05</li><li>06</li><li>07</li><li>08</li><li>09</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li><li>41</li><li>42</li><li>43</li><li>44</li><li>45</li><li>46</li><li>47</li><li>48</li><li>49</li><li>50</li><li>51</li><li>52</li><li>53</li><li>54</li><li>55</li><li>56</li><li>57</li><li>58</li><li>59</li></ul></div><div class="panel-up">︿</div><div class="panel-down">﹀</div></div></div><button class="timerBtn" style="margin-left: 4px;">开始</button></li></ul><footer style="position: relative; margin: -2px 20px 0px;"><a href="https://flipflow.neverup.cn/guide/help.html" target="_blank" style="color: rgb(102, 102, 102); text-decoration: none; font-size: 15px;"> 帮助文档 </a><span style="position: absolute; right: 0px; color: rgb(255, 255, 255);"></span></footer></div></div></div></div>
+    <script src="./hm.js"></script><script src="./chunk-vendors.2fab77c5.js"></script>
+    <script src="./app.916787af.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?5fe89cd06ef8c8c20868233e8510ccf7";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
     </script>
-</body>
-</html>
+
+
+</body><div class="xl-chrome-ext-bar_4DB361DE-01F7-4376-B494-639E489D19ED" id="xl_chrome_ext_4DB361DE-01F7-4376-B494-639E489D19ED" data-v-app="" style="display: block;"><div class=""><div id="xl_chrome_ext_video_tag_wrapper_4DB361DE-01F7-4376-B494-639E489D19ED" config="[object Object]" uiversion="v2" exception="false" latestvideosrc="" isshowvideotag="false" isshowdownloadbar="true" isshowcloudaddbar="false" latestvideoelement=""><div><div class="_video_op_wrapper_mpbxe_1" config="[object Object]" uiversion="v2" style="display: none;"><ul class="_video_op_list_mpbxe_17"><li class="_op_item_mpbxe_38 _download_mpbxe_44"><span class="_op_icon_mpbxe_24"></span><span class="_op_text_mpbxe_30">下载</span></li><li class="_op_item_mpbxe_38 _screen_mpbxe_50"><span class="_op_icon_mpbxe_24"></span><span class="_op_text_mpbxe_30">投屏</span></li></ul></div></div></div><div class="badge_wrapper_4DB361DE-01F7-4376-B494-639E489D19ED _badge_wrapper_eor63_1" id="badge_wrapper_4DB361DE-01F7-4376-B494-639E489D19ED"><div class="_logo_eor63_20"></div><span class="_line_eor63_27"></span><div class="_text_wrapper_eor63_33"><span class="_download_icon_eor63_39"></span><span class="_text_eor63_33">高速下载</span></div></div><!----><!----><!----><!----></div></div></html>
