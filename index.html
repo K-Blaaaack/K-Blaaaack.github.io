@@ -1,106 +1,306 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - 页面跑丢了 | Page Got Lost</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Arial', 'PingFang SC', sans-serif;
-            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>账号救援模板</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f0f0;
+    }
 
-        .container {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
-            width: 90%;
-            animation: fadeIn 1s ease-in-out;
-        }
+    /* 弹窗遮罩 */
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
 
-        h1 {
-            font-size: 6em;
-            margin: 0;
-            color: #333;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-        }
+    /* 弹窗主体 */
+    .popup {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 20px 30px;
+      width: 400px;
+      max-width: 90%;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transform: scale(0.9);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
 
-        h2 {
-            font-size: 1.8em;
-            color: #555;
-            margin: 20px 0;
-        }
+    /* 弹窗显示状态 */
+    .popup.show {
+      opacity: 1;
+      transform: scale(1);
+    }
 
-        p {
-            font-size: 1.1em;
-            color: #777;
-            margin-bottom: 30px;
-        }
+    /* 弹窗隐藏动画 */
+    .popup.hide {
+      opacity: 0;
+      transform: scale(0.9);
+    }
 
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            font-size: 1em;
-            color: white;
-            background-color: #ff6b6b;
-            text-decoration: none;
-            border-radius: 25px;
-            transition: background-color 0.3s, transform 0.2s;
-        }
+    .popup h2 {
+      margin-top: 0;
+      font-size: 20px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 6px;
+      color: #222; /* 深色标题 */
+    }
 
-        .btn:hover {
-            background-color: #4ecdc4;
-            transform: translateY(-2px);
-        }
+    .popup ul {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 20px 0;
+    }
 
-        /* 动画效果 */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .popup ul li {
+      margin: 6px 0;
+    }
 
-        /* 响应式设计 */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 4em;
-            }
+    .popup ul li a {
+      text-decoration: none;
+      color: #007BFF;
+      font-size: 15px;
+      transition: 0.2s;
+    }
 
-            h2 {
-                font-size: 1.5em;
-            }
+    .popup ul li a:hover {
+      text-decoration: underline;
+    }
 
-            p {
-                font-size: 1em;
-            }
+    /* 关闭按钮 */
+    .close-btn {
+      display: block;
+      text-align: right;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+    .close-btn button {
+      background: transparent;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: #666;
+      transition: 0.2s;
+      padding: 4px 8px;
+    }
+    .close-btn button:hover {
+      color: #000;
+    }
 
-            .container {
-                padding: 20px;
-                width: 85%;
-            }
-        }
-    </style>
+    /* 移动端优化 */
+    @media (max-width: 480px) {
+      .popup {
+        width: 90%;
+        padding: 16px 20px;
+      }
+      .popup h2 {
+        font-size: 18px;
+      }
+      .popup ul li a {
+        font-size: 16px;
+      }
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <h1>404</h1>
-        <h2>哎呀，页面跑丢了！ | Oops, Page Got Lost!</h2>
-        <p>这页面可能去星际旅行了，或者被外星人绑架了... 要不回首页看看？<br>Looks like this page took a cosmic detour or got abducted by aliens... Wanna head back home?</p>
-        <a href="/" class="btn">返回首页 | Back to Home</a>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center">
+  <!-- 顶部 GitHub 导航栏 -->
+<header class="w-full sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
+  <div class="max-w-4xl mx-auto px-4 py-2 flex items-center justify-between">
+    <!-- 标识 -->
+    <div class="flex items-center gap-2">
+      <!-- GitHub 标志 -->
+      <svg aria-hidden="true" viewBox="0 0 16 16" width="20" height="20" class="text-gray-800 fill-current">
+        <path fill-rule="evenodd"
+          d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38
+             0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01
+             1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95
+             0-.87.31-1.59.82-2.15-.08-.2-.36-1.01.08-2.1 0 0 .67-.21 2.2.82a7.62 7.62 0 0 1 2-.27c.68 0 1.36.09 2 .27
+             1.53-1.04 2.2-.82 2.2-.82.44 1.09.16 1.9.08 2.1.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48
+             0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+      </svg>
+      <span class="font-semibold text-gray-800">
+        <a href="https://github.com/K-Blaaaack/">K-Black</a>
+      </span>
     </div>
+
+    <!-- 右侧链接 -->
+    <nav class="flex items-center gap-3 text-sm">
+      <a
+        id="openPopupBtn"
+        target="_blank" rel="noopener noreferrer"
+        class="px-3 py-1 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-50 transition">
+        各种链接/Link
+      </a>
+      <a
+        href="https://github.com/K-Blaaaack/K-Blaaaack.github.io/tree/BlueArchive-Account-Recovery"
+        target="_blank" rel="noopener noreferrer"
+        class="px-3 py-1 rounded-full bg-gray-900 text-white hover:bg-gray-800 transition">
+        本站源码
+      </a>
+    </nav>
+  </div>
+</header>
+  <div class="bg-blue-50 border border-blue-200 text-blue-700 rounded-xl p-4 mb-6 w-full max-w-2xl">
+    <h2 class="font-semibold mb-2">如何申诉账号？</h2>
+    <p class="text-sm leading-relaxed">
+      请访问
+      <a href="https://bluearchive.jp/contact/2" target="_blank" rel="noopener noreferrer" 
+         class="underline text-blue-600 hover:text-blue-800">
+        蓝档案账号申诉页面
+      </a>，
+      按照提示提交信息，并耐心等待官方回复邮件。
+    </p>
+  </div>
+  
+  <!-- 弹窗结构 -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup" id="popupBox">
+      <div class="close-btn">
+        <button id="closePopupBtn">&times;</button>
+      </div>
+      <h2>常用工具</h2>
+      <ul>
+        <li><a href="https://www.gamekee.com/ba/" target="_blank">蔚蓝档案Wiki(gamekee)</a></li>
+        <li><a href="https://bluearchive.jp/contact/2" target="_blank">蔚蓝档案日服账号申诉页面</a></li>
+      </ul>
+
+      <h2>我的其他站点</h2>
+      <ul>
+        <li><a href="https://github.com/K-Blaaaack/" target="_blank">我的GitHub主页</a></li>
+        <li><a href="https://clock.k-black.top/" target="_blank">翻页时钟（基于FlipFlow自改）</a></li>
+        <li><a href="https://k-black.top/" target="_blank">？？？</a></li>
+        <li><a href="https://github.com/K-Blaaaack/K-Blaaaack.github.io/tree/BlueArchive-Account-Recovery" target="_blank">本站源码</a></li>
+      </ul>
+
+      <h2>蔚蓝档案网站</h2>
+      <ul>
+        <li><a href="https://bluearchive-cn.com/" target="_blank">国服</a></li>
+        <li><a href="https://bluearchive.jp/" target="_blank">日服</a></li>
+        <li><a href="https://bluearchive.nexon.com/" target="_blank">国际服</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <h1 class="text-3xl font-bold text-gray-800 mb-4">账号申诉模板</h1>
+  <!-- 提示 -->
+  <p class="text-lg text-gray-600 mb-6 text-center max-w-2xl">
+    提交了申诉之后，他发回个邮件告诉要补充信息，就用这个模板去回复,提示：用的时候建议把那些填写提示删掉，比如:[...]。
+  </p>
+  <!-- 模板区域 -->
+  <div class="bg-white shadow-lg rounded-2xl p-6 w-full max-w-4xl border border-gray-200">
+    <pre class="whitespace-pre-wrap break-words text-gray-800 text-sm leading-relaxed">
+アカウント復旧に関するご依頼（UID：Xxxxxx）
+「ブルーアーカイブ」運営事務局 様
+
+お世話になっております。ニジュイシゲジバ（UID：xxxxxx）と申します。アカウント復旧に関するご案内をありがとうございます。以下に、必要情報を記載いたしますので、アカウントの復旧手続きをお願いいたします。
+
+1. UID
+xxxxxxx
+
+2. ゲームユーザーID
+［填写账号ID，若不知道，填写“不明”］
+
+3. Yostar ID
+［填写你的Youstar ID,若不清楚或者因为无法登录看不到，写“不明（ログインできないため確認できません）”］
+
+4. フレンドコード
+[填写您的好友代码，若不清楚请写“不明”]
+
+5. 呼び名
+［填写你的游戏账号的名字］
+
+6. 連携コード発行時のスクリーンショット
+[若有截图，请写“添付ファイルにてスクリーンショットを送信いたします”；若无，请写“スクリーンショットはございません”]
+
+7. ゲーム内の「アカウントを削除」機能を使用したか
+[填写是否使用过，例如“使用していません”或“使用した記憶があります”]
+
+8. 連携に使用したXアカウント
+[填写绑定的X账号，例如“@example”，若无请写“使用していません”]
+
+9. Yostar連携に使用したメールアドレス
+［邮箱］
+[若有其他曾用过的邮箱，请补充，例如“以前使用したメールアドレス：example2@gmail.com”]
+
+10. 挨拶（アカウント情報のコメント）
+[填写游戏内设置的问候语，若无请写“設定していません”或“不明”]
+
+11. ゲーム内で設定した生年月日
+［填生日，没写或者忘了填未設定］
+
+12. 星5に神秘開放したキャラクター
+[填写已解锁神秘的五星角色，例如“聖園ミカ（水着）”或其他，若无请写“なし”]
+
+13. 星4に神秘開放したキャラクター
+[填写已解锁神秘的四星角色，若无请写“なし”]
+
+14. 所持青輝石数
+[填写持有的青辉石数量，例如“約5000個”，若不清楚请写“不明”]
+
+補足情報
+ゲーム開始日時：2024年1月1日 00:00 （想不到就随便填大概就行）
+最終ログイン日時：2025年8月4日 18:00（最好是真实日期时间）
+
+所持キャラクター例：
+[填写等级，例如“聖園ミカ（水着）Lv70”或“不明”]
+
+問題の詳細：以前（以前的邮箱）で認証コードを取得しログインしていましたが、今日ログインしたところYostarアカウントに切り替わっており、Googleアカウントでログインすると新しいデフォルトアカウントになってしまいました。別のメールアドレスでYostarを登録し直そうとしましたが「既に連携済み」と表示されます。以前のアカウントに戻したいです。
+
+不足している情報がある場合、大変恐縮ですが追加でご案内いただけますと幸いです。キャラクターたちは私にとって非常に大切な存在ですので、復旧のほど何卒よろしくお願い申し上げます。
+
+お名前
+（游戏名字）
+
+連絡先メールアドレス
+（你用来联系的邮箱）
+    </pre>
+  </div>
+  <script>
+    const openBtn = document.getElementById("openPopupBtn");
+    const closeBtn = document.getElementById("closePopupBtn");
+    const overlay = document.getElementById("popupOverlay");
+    const popupBox = document.getElementById("popupBox");
+
+    // 打开弹窗
+    openBtn.addEventListener("click", () => {
+      overlay.style.display = "flex";
+      setTimeout(() => {
+        popupBox.classList.add("show");
+        popupBox.classList.remove("hide");
+      }, 10);
+    });
+
+    // 关闭弹窗
+    function closePopup() {
+      popupBox.classList.remove("show");
+      popupBox.classList.add("hide");
+      setTimeout(() => {
+        overlay.style.display = "none";
+      }, 300); // 等待动画结束
+    }
+
+    closeBtn.addEventListener("click", closePopup);
+
+    // 点击遮罩关闭
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) {
+        closePopup();
+      }
+    });
+  </script>
 </body>
 </html>
