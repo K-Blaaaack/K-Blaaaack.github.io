@@ -113,6 +113,81 @@
         font-size: 16px;
       }
     }
+    .footer {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid #ddd;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+  padding: 16px 20px;
+  margin-top: 40px;
+  border-radius: 12px 12px 0 0;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.footer-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.footer-text {
+  margin: 0;
+  font-size: 14px;
+  color: #444;
+}
+
+.footer-deploy {
+  font-size: 13px;
+  margin: 6px 0 12px 0;
+  color: #666;
+}
+
+.footer-links {
+  margin-top: 8px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #007BFF;
+  margin: 0 10px;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.footer-links a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* 作者名字动画初始状态 */
+.author-name {
+  display: inline-block;
+  opacity: 0;
+  transform: translateX(-30px) scale(0.8);
+  transition: all 0.8s ease;
+}
+
+/* 动画触发后的状态 */
+.author-name.animate {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+/* 移动端优化 */
+@media (max-width: 480px) {
+  .footer-text {
+    font-size: 13px;
+  }
+  .footer-deploy {
+    font-size: 12px;
+  }
+  .footer-links a {
+    display: inline-block;
+    margin: 6px 8px;
+    font-size: 13px;
+  }
+}
+
   </style>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -269,6 +344,22 @@ xxxxxxx
 （你用来联系的邮箱）
     </pre>
   </div>
+  <!-- 网页底部作者信息栏 -->
+<footer class="footer">
+  <div class="footer-container">
+    <p class="footer-text">
+      © 2025  BA日服申述模板 | 作者：
+      <span class="author-name">K-Black</span>
+    </p>
+    <p class="footer-deploy">本站由 <strong>Cloudflare Workers</strong> 部署到全球网络</p>
+    <div class="footer-links">
+      <a href="/wip.html" target="_blank">关于我</a>
+      <a href="/wip.html" target="_blank">联系</a>
+      <a href="/wip.html" target="_blank">我的其他作品</a>
+    </div>
+  </div>
+</footer>
+
   <script>
     const openBtn = document.getElementById("openPopupBtn");
     const closeBtn = document.getElementById("closePopupBtn");
@@ -302,5 +393,21 @@ xxxxxxx
       }
     });
   </script>
+  <script>
+    // 监听 footer 出现在视口
+    const author = document.querySelector(".author-name");
+  
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          author.classList.add("animate");
+          observer.unobserve(author); // 只触发一次
+        }
+      });
+    }, { threshold: 0.5 });
+  
+    observer.observe(author);
+  </script>
+  
 </body>
 </html>
