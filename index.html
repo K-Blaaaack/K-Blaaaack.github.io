@@ -358,9 +358,11 @@ xxxxxxx
       <span class="author-name">K-Black</span>
     </p>
     <p class="footer-deploy">本站由 <strong>Cloudflare Workers</strong> 部署到全球网络</p>
+    <div id="runtime" style="font-weight: bold; color:rgb(92, 91, 91);"></div>
+    <div id="lastUpdate" style="font-weight: bold; color: rgb(92, 91, 91);"></div>
     <div class="footer-links">
       <a href="./wip.html" target="_blank">关于我</a>
-      <a href="./wip.html" target="_blank">联系</a>
+      <a href="mailto:KitasanBlack@K-Black.top?subject=你好&body=这里是邮件正文">联系我</a>
       <a href="./info.html" target="_blank">这个网站是干啥的？</a>
     </div>
   </div>
@@ -414,6 +416,42 @@ xxxxxxx
   
     observer.observe(author);
   </script>
+  <script>
+    // 设置网站上线时间（第一次运行）
+    const startTime = new Date("2025/08/25 13:11:45");
+    
+    // 设置上一次部署/修改的时间
+    const lastDeployTime = new Date("2025/09/09 21:12:00");
+    
+    function formatDiff(diff) {
+      const days = Math.floor(diff / 86400);
+      diff %= 86400;
+      const hours = Math.floor(diff / 3600);
+      diff %= 3600;
+      const minutes = Math.floor(diff / 60);
+      const seconds = diff % 60;
+      return `${days}天 ${hours}小时 ${minutes}分钟 ${seconds}秒`;
+    }
+    
+    function updateInfo() {
+      const now = new Date();
+    
+      // 运行时间
+      let diffRun = Math.floor((now - startTime) / 1000);
+      document.getElementById("runtime").textContent =
+        `本站已运行 ${formatDiff(diffRun)}`;
+    
+      // 上一次部署/修改
+      let diffDeploy = Math.floor((now - lastDeployTime) / 1000);
+      document.getElementById("lastUpdate").textContent =
+        `距上一次更新 ${formatDiff(diffDeploy)}`;
+    }
+    
+    // 每秒更新
+    setInterval(updateInfo, 1000);
+    updateInfo();
+    </script>
+  
   
 </body>
 </html>
