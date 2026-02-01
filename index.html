@@ -134,10 +134,66 @@ footer {
   color: var(--muted);
   font-size: 13px;
 }
+  /* Mobile responsive */
+@media (max-width: 900px) {
+  body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+    z-index: 999;
+    display: none;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar.active {
+    display: block;
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 20px 16px 40px 16px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  pre {
+    font-size: 13px;
+    padding: 12px;
+  }
+
+  .menu-btn {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 1000;
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+}
 
   </style>
 </head>
 <body>
+  <button class="menu-btn" onclick="toggleMenu()">目录</button>
   <aside class="sidebar">
     <h2>目录</h2>
     <a href="#intro">概述</a>
@@ -248,9 +304,4 @@ AUR → 打包者处理 Chaotic-AUR → 已编译 Flatpak → 沙箱隔离 debta
      它将成为 <b>Linux 生态中软件最多、最强大的发行版</b>。
    </div>
  </section> <footer>
-   © 2026 Arch Software Ecosystem Guide · Designed for reading & documentation
- </footer>
-
-  </main>
-</body>
-</html>
+   © 2026 Arch Software Ecosystem Guide · Designed for reading &
