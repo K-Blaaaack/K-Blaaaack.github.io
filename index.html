@@ -1,109 +1,256 @@
-<html lang="zh-CN">
-<!-- 这个网站是由 ciallo.cc 修改过来哒~ 感谢「リウ・ディ」さま~ -->
+<!DOCTYPE html><html lang="zh-CN">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>装逼让你飞起来</title>
-    <link rel="shortcut icon" href="./favicon.ico">
-    <style>
-        .center {
-            width: 540px;
-            height: 120px;
-            margin: auto;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-        body {
-            overflow: hidden; /* 隐藏滚动条 */
-            user-select: none; /* 禁用所有元素的鼠标选择操作 */
-            -webkit-user-select: none; /* 禁用 Chrome 和 Safari 的鼠标选择操作 */
-            -moz-user-select: none; /* 禁用 Firefox 的鼠标选择操作 */
-            -ms-user-select: none; /* 禁用 IE 的鼠标选择操作 */
-            background-color: #181A1B; /* 更改背景颜色 */
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arch Linux 软件管理与 .deb/.rpm 解决方案</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --panel: #161b22;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --code-bg: #0d1117;
+      --border: #30363d;
+      --sidebar: #0b0e14;
+    }* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 280px;
+  background: var(--sidebar);
+  border-right: 1px solid var(--border);
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+  font-size: 18px;
+  color: var(--accent);
+  text-align: center;
+}
+
+.sidebar a {
+  display: block;
+  color: var(--text);
+  text-decoration: none;
+  padding: 8px 12px;
+  margin: 4px 0;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.sidebar a:hover {
+  background: rgba(88, 166, 255, 0.15);
+  color: var(--accent);
+}
+
+/* Main content */
+.content {
+  margin-left: 280px;
+  padding: 40px 60px;
+  max-width: 1100px;
+}
+
+h1, h2, h3 {
+  color: var(--accent);
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  margin-top: 60px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+}
+
+p {
+  line-height: 1.7;
+  color: var(--text);
+}
+
+ul, ol {
+  line-height: 1.8;
+}
+
+/* Code blocks */
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-size: 14px;
+  margin: 18px 0;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.02), 0 8px 20px rgba(0,0,0,0.4);
+}
+
+code {
+  font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+  color: #c9d1d9;
+}
+
+.tip {
+  background: rgba(88, 166, 255, 0.08);
+  border-left: 4px solid var(--accent);
+  padding: 14px 16px;
+  border-radius: 6px;
+  margin: 16px 0;
+  color: var(--text);
+}
+
+.block {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin: 26px 0;
+}
+
+footer {
+  margin-top: 80px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+  </style>
 </head>
 <body>
-    <div id="main" class="center">
-        <img src="./ciallo.gif" style="filter: invert(100%);" draggable="false">
-    </div>
-    <script src="./jquery.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            // 每秒生成一个弹幕
-            setInterval(createBulletScreen, 80);
+  <aside class="sidebar">
+    <h2>目录</h2>
+    <a href="#intro">概述</a>
+    <a href="#core">核心思想</a>
+    <a href="#sources">软件来源体系</a>
+    <a href="#aur">AUR</a>
+    <a href="#chaotic">Chaotic-AUR</a>
+    <a href="#flatpak">Flatpak</a>
+    <a href="#deb-rpm">.deb / .rpm 解决方案</a>
+    <a href="#deps">依赖处理逻辑</a>
+    <a href="#combo">推荐系统组合</a>
+    <a href="#workflow">使用流程总览</a>
+    <a href="#summary">总结</a>
+  </aside>  <main class="content">
+    <section id="intro">
+      <h1>Arch Linux 软件管理与 .deb/.rpm 解决方案</h1>
+      <p>适用于 Arch Linux / Manjaro / EndeavourOS 等 Arch 系发行版。</p>
+      <div class="tip">
+        目标：让 Arch Linux 拥有 <b>比 Ubuntu / CentOS 更多的软件资源</b>，并保持系统 <b>纯净、依赖可控、升级安全</b>。
+      </div>
+    </section><section id="core">
+  <h2>核心思想</h2>
+  <p>Arch 官方仓库只提供最核心、最纯净的软件，因此默认看起来“软件少”。</p>
+  <p><b>真正的力量来自：</b></p>
+  <pre><code>AUR + Chaotic-AUR + Flatpak + 容器</code></pre>
+</section>
 
-            // 随机生成弹幕内容、颜色、大小以及固定高度
-            function createBulletScreen() {
-                const texts = ["装逼让你飞起来", "装逼让你飞起来"];
-                const text = texts[Math.floor(Math.random() * texts.length)];
-                const size = Math.floor(Math.random() * 20 + 5) + "px";
-                const topPosition = Math.floor(Math.random() * window.innerHeight) + "px";
-                
-                // 创建弹幕元素并设置样式
-                const bullet = $("<span></span>").text(text);
-                bullet.css({
-                    "position": "absolute",
-                    "white-space": "nowrap",
-                    "color": color16(),
-                    "font-size": size,
-                    "top": topPosition,
-                    "left": "100%", // 在屏幕外右侧生成
-                });
+<section id="sources">
+  <h2>软件来源体系</h2>
+  <div class="block">
+    <ul>
+      <li><b>AUR / Chaotic-AUR：</b>原生 Arch 包，依赖最优</li>
+      <li><b>Flatpak：</b>桌面软件补充</li>
+      <li><b>debtap：</b>转换 .deb/.rpm</li>
+      <li><b>distrobox：</b>容器运行 Ubuntu/Fedora 软件</li>
+    </ul>
+  </div>
+</section>
 
-                $("body").append(bullet);
-                
-                // 动画从右向左滚动弹幕
-                bullet.animate(
-                    { left: `-${bullet.width()}px` },
-                    16699,
-                    "linear",
-                    function() {
-                        bullet.remove(); // 动画结束后移除弹幕
-                    }
-                );
-            }
+<section id="aur">
+  <h2>AUR</h2>
+  <p>AUR 是 Arch 的社区仓库，包含几乎所有商业、闭源、冷门软件。</p>
+  <pre><code>sudo pacman -S --needed git base-devel
 
-            // 点击效果
-            $("body").click(function(e) {
-                const a = ["装逼我让你飞起来，相信不？"];
-                const $i = $("<span/>").text(a[Math.floor(Math.random() * a.length)]);
-                const x = e.pageX,
-                    y = e.pageY;
-                $i.css({
-                    "z-index": 999999,
-                    "top": y - 20,
-                    "left": x,
-                    "position": "absolute",
-                    "font-weight": "bold",
-                    "color": color16()
-                });
-                $("body").append($i);
-                play_sound('./zhuangbi.mp3');
-                $i.animate({
-                    "top": y - 180,
-                    "opacity": 0
-                }, 1500, function() {
-                    $i.remove();
-                });
-            });
-        });
+git clone https://aur.archlinux.org/yay.git cd yay makepkg -si</code></pre> <pre><code>yay -S google-chrome yay -S wechat-uos yay -S qq-linux yay -S visual-studio-code-bin</code></pre> </section>
 
-        function color16(){
-            const r = Math.floor(Math.random() * 256);
-            const g = Math.floor(Math.random() * 256);
-            const b = Math.floor(Math.random() * 256);
-            return `rgb(${r}, ${g}, ${b})`;
-        }
+<section id="chaotic">
+  <h2>Chaotic-AUR（二进制 AUR）</h2>
+  <p>提供已编译好的 AUR 软件，直接 pacman 安装。</p>
+  <pre><code>sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
 
-        function play_sound(url_data) {
-            const audio = new Audio(url_data);
-            audio.play().catch(function(error) {
-                console.error('播放音频时出错：', error);
-            });
-        }
-    </script>
+sudo pacman-key --lsign-key 3056513887B78AEB</code></pre> <pre><code>sudo pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst sudo pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst</code></pre> <pre><code>echo -e "[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf sudo pacman -Syu</code></pre> </section>
+
+<section id="flatpak">
+  <h2>Flatpak</h2>
+  <pre><code>sudo pacman -S flatpak
+
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo</code></pre> <pre><code>flatpak install flathub org.telegram.desktop flatpak install flathub com.discordapp.Discord</code></pre> </section>
+
+<section id="deb-rpm">
+  <h2>.deb / .rpm 解决方案</h2>
+
+  <h3>方案 1：AUR</h3>
+  <pre><code>yay -Ss 软件名</code></pre>
+
+  <h3>方案 2：debtap</h3>
+  <pre><code>yay -S debtap
+
+sudo debtap -u</code></pre> <pre><code>debtap xxx.deb debtap xxx.rpm sudo pacman -U xxx.pkg.tar.zst</code></pre>
+
+<h3>方案 3：distrobox</h3>
+  <pre><code>sudo pacman -S distrobox
+
+distrobox create -i ubuntu:latest -n ubx distrobox enter ubx sudo apt install ./xxx.deb</code></pre> </section>
+
+<section id="deps">
+  <h2>依赖处理逻辑</h2>
+  <pre><code>官方仓库 → pacman
+
+AUR → 打包者处理 Chaotic-AUR → 已编译 Flatpak → 沙箱隔离 debtap → 自动映射 + 手动确认 distrobox → 容器系统自行处理</code></pre> </section>
+
+<section id="combo">
+  <h2>推荐系统组合</h2>
+  <pre><code>Arch Linux
+
+├─ pacman ├─ AUR + yay ├─ Chaotic-AUR ├─ Flatpak ├─ debtap └─ distrobox</code></pre> </section>
+
+<section id="workflow">
+  <h2>使用流程总览</h2>
+  <pre><code>1. pacman 搜索
+
+2. yay 搜索（AUR）
+
+
+3. Chaotic-AUR
+
+
+4. debtap
+
+
+5. distrobox</code></pre>
+
+ </section> <section id="summary">
+   <h2>总结</h2>
+   <div class="tip">
+     Arch Linux 并不是软件少，而是 <b>把自由、纯净、可控放在第一位</b>。
+     当你正确使用 AUR + Chaotic-AUR + Flatpak + 容器后，
+     它将成为 <b>Linux 生态中软件最多、最强大的发行版</b>。
+   </div>
+ </section> <footer>
+   © 2026 Arch Software Ecosystem Guide · Designed for reading & documentation
+ </footer>
+
+  </main>
 </body>
 </html>
